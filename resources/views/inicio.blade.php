@@ -2,7 +2,7 @@
 <html lang="{{ app()->getLocale() }}">
         <head>
             <title>AppWeb-Tp2</title>                      
-            <script src="{{ asset('js/maps_api.js') }}"></script>
+            <script src="https://maps.googleapis.com/maps/api/js"></script>
             <script src="{{ asset('js/gmaps.js') }}"></script>
             <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
             <link href="{{ asset('css_propios/nav.css') }}" rel="stylesheet">            
@@ -32,12 +32,24 @@
                             <label for="accidente"> Accidentes de Tránsito</label><br>
                             <img id="accidente" src="{{ asset('images/senial_accidente.jpg') }}" alt="Smiley face" width="50" height="50">
                             <br><br>
-                            <label for="accidente"> Robos</label><br>
-                            <img id="accidente" src="{{ asset('images/senial_robo.jpg') }}" alt="Smiley face" width="50" height="50">
+                            <label for="robo"> Robos</label><br>
+                            <img id="robo" src="{{ asset('images/senial_robo.jpg') }}" alt="Smiley face" width="50" height="50">
                             <br><br>
-                            <label for="accidente"> Animales Sueltos</label><br>
-                            <img id="accidente" src="{{ asset('images/senial_animales.jpg') }}" alt="Smiley face" width="50" height="50">
-                        </div>                       
+                            <label for="animales"> Animales Sueltos</label><br>
+                            <img id="animales" src="{{ asset('images/senial_animales.jpg') }}" alt="Smiley face" width="50" height="50">
+                        </div>
+                        <hr>
+                        <h1 align="center">Objetos</h1><br>
+                        <div align="center">
+                            <label for=""> Semáforos</label><br>
+                            <img id="semaforo" src="{{ asset('images/semaforo.jpg') }}" alt="Smiley face" width="50" height="50">
+                            <br><br>
+                            <label for=""> Pérdida de Agua</label><br>
+                            <img id="perdida_agua" src="{{ asset('images/perdida_agua.jpg') }}" alt="Smiley face" width="50" height="50">
+                            <br><br>
+                            <label for=""> Baches</label><br>                        
+                            <img id="bache" src="{{ asset('images/bache.jpg') }}" alt="Smiley face" width="50" height="50">    
+                        </div>                        
                     </div>
                 </div>
             </div>
