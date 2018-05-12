@@ -80,12 +80,10 @@
                         var point=new google.maps.Point(e.pageX,e.pageY);
                         var ll=overlay.getProjection().fromContainerPixelToLatLng(point);
                         placeMarker_bache(ll);   
-                        setTimeout(function(){
-                            $('#myModal').modal('toggle');
-                            $('#myModal').modal('show');                        
-                        },850);                        
-                    }
-                });
+                        $('#myModal').modal('toggle');
+                        $('#myModal').modal('show');                        
+                        }
+                    });
             });
         </script>
        
