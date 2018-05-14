@@ -15,6 +15,8 @@ class AguaCloacaController extends Controller
     public function index()
     {
         //
+        $agua = AguaCloaca::all(); 
+        return view('listado',compact('agua'));
     }
 
     /**
@@ -36,6 +38,9 @@ class AguaCloacaController extends Controller
     public function store(Request $request)
     {
         //
+        $aguacloaca = new AguaCloaca;
+        $aguacloaca->create($request->all());
+        return redirect('ObjectState/index');
     }
 
     /**
@@ -44,9 +49,13 @@ class AguaCloacaController extends Controller
      * @param  \App\AguaCloaca  $aguaCloaca
      * @return \Illuminate\Http\Response
      */
-    public function show(AguaCloaca $aguaCloaca)
+    public function show($id)
     {
         //
+        $aguacloaca=AguaCloaca::find($id);
+        //en $objeto tengo aquel que coincide con $id
+        return 'Encontre el objeto, hacer algo luego';
+        //return  view('libro.show',compact('objeto'));
     }
 
     /**
@@ -67,9 +76,12 @@ class AguaCloacaController extends Controller
      * @param  \App\AguaCloaca  $aguaCloaca
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AguaCloaca $aguaCloaca)
+    public function update(Request $request, $id)
     {
         //
+
+        AguaCloaca::find($id)->update($request->all());
+        return redirect('ObjectState/index');
     }
 
     /**
@@ -78,8 +90,10 @@ class AguaCloacaController extends Controller
      * @param  \App\AguaCloaca  $aguaCloaca
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AguaCloaca $aguaCloaca)
+    public function destroy($id)
     {
         //
+        AguaCloaca::find($id)->delete();
+        return redirect('ObjectState/index')->with('success','Registro eliminado satisfactoriamente');
     }
 }

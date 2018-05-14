@@ -16,8 +16,8 @@ class CreateAccidentesTable extends Migration
         Schema::create('accidentes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('entity_id')->unsigned();
-            $table->foreign('entity_id')->references('id')->on('entities');
-            $table->enum('estado', ['sin lesionados','lesiones leves','lesiones graves']);
+            $table->foreign('entity_id')->references('id')->on('entities')->onDelete('cascade');
+            $table->enum('gravedad', ['sin lesionados','lesiones leves','lesiones graves']);
             $table->timestamps();
         });
     }

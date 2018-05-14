@@ -16,7 +16,7 @@ class CreateAguaCloacasTable extends Migration
         Schema::create('agua_cloacas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('object_state_id')->unsigned();
-            $table->foreign('object_state_id')->references('id')->on('object_states');
+            $table->foreign('object_state_id')->references('id')->on('object_states')->onDelete('cascade');
             $table->enum('estado',['perdida','sin suministro']);
             $table->timestamps();
         });

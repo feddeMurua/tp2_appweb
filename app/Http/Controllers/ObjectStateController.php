@@ -30,7 +30,8 @@ class ObjectStateController extends Controller
      */
     public function create()
     {
-        //aca se crea un nuevo registro. 
+        //aca se crea un nuevo registro. Debo llamar a quien genere
+        //los campos y el evento
         
     }
 
@@ -55,9 +56,13 @@ class ObjectStateController extends Controller
      * @param  \App\ObjectState  $objectState
      * @return \Illuminate\Http\Response
      */
-    public function show(ObjectState $objectState)
+    public function show($id)
     {
         //
+        $objeto=ObjectState::find($id);
+        //en $objeto tengo aquel que coincide con $id
+        return 'Encontre el objeto, hacer algo luego';
+        //return  view('libro.show',compact('objeto'));
     }
 
     /**
@@ -78,9 +83,11 @@ class ObjectStateController extends Controller
      * @param  \App\ObjectState  $objectState
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ObjectState $objectState)
+    public function update(Request $request, AguaCloaca $aguaCloaca)
     {
         //
+        $object = $objectState->update($request->all());
+        return redirect('ObjectState/index');
     }
 
     /**
@@ -89,8 +96,10 @@ class ObjectStateController extends Controller
      * @param  \App\ObjectState  $objectState
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ObjectState $objectState)
+    public function destroy($id)
     {
         //
+        ObjectState::find($id)->delete();
+        return redirect('ObjectState/index')->with('success','Registro eliminado satisfactoriamente');
     }
 }

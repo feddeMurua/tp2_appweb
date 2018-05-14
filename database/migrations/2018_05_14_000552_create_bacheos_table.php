@@ -15,6 +15,8 @@ class CreateBacheosTable extends Migration
     {
         Schema::create('bacheos', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('object_state_id')->unsigned();
+            $table->foreign('object_state_id')->references('id')->on('object_states')->onDelete('cascade');
             $table->enum('estado',['calle en mal estado','calle bloqueada']);
             $table->timestamps();
         });

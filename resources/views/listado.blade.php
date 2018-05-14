@@ -69,7 +69,7 @@
             <thead>
                 <tr>
                   <th>Nombre</th>
-                  <th>Fecha y Hora</th>
+                  <th>ubicacion</th>
  
                 </tr>
             </thead>
@@ -77,7 +77,7 @@
                 @foreach($objetos as $object)
                 <tr>
                     <td>{{ $object->nombre }}</td>
-                    <td>{{ $object->fecha_y_hora }}</td>
+                    <td>{{ $object->ubicacion }}</td>
                 </tr>
                 @endforeach
             </tbody>

@@ -15,6 +15,8 @@ class BacheoController extends Controller
     public function index()
     {
         //
+        $bacheo = Bacheo::all(); 
+        return view('listado',compact('bacheo'));
     }
 
     /**
@@ -24,7 +26,9 @@ class BacheoController extends Controller
      */
     public function create()
     {
-        //
+        //este deriva a un formulario, el cual debe tomar todos
+        //los parametros del bache (nombre, fecha_y_hora, ubicacion, object_state_id (recuperarlo y pasarlo), estado(mostrar opciones y tomar el elegido)) y luego de todo esto llama a store para ser almacenado en la base de datos
+
     }
 
     /**
@@ -36,6 +40,9 @@ class BacheoController extends Controller
     public function store(Request $request)
     {
         //
+        $bacheo = new Bacheo;
+        $bacheo->create($request->all());
+        return redirect('ObjectState/index')
     }
 
     /**
@@ -44,9 +51,13 @@ class BacheoController extends Controller
      * @param  \App\Bacheo  $bacheo
      * @return \Illuminate\Http\Response
      */
-    public function show(Bacheo $bacheo)
+    public function show($id)
     {
         //
+        $bacheo=Bacheo::find($id);
+        //en $objeto tengo aquel que coincide con $id
+        return 'Encontre el objeto, hacer algo luego';
+        //return  view('libro.show',compact('objeto'));
     }
 
     /**
@@ -67,9 +78,11 @@ class BacheoController extends Controller
      * @param  \App\Bacheo  $bacheo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Bacheo $bacheo)
+    public function update(Request $request, $id)
     {
         //
+        Bacheo::find($id)->update($request->all());
+        return redirect('ObjectState/index');
     }
 
     /**
@@ -78,8 +91,10 @@ class BacheoController extends Controller
      * @param  \App\Bacheo  $bacheo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Bacheo $bacheo)
+    public function destroy($id)
     {
         //
+        Bacheo::find($id)->delete();
+        return redirect('ObjectState/index')->with('success','Registro eliminado satisfactoriamente');
     }
 }

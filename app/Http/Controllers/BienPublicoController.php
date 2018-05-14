@@ -15,6 +15,8 @@ class BienPublicoController extends Controller
     public function index()
     {
         //
+        $bien = BienPublico::all(); 
+        return view('listado',compact('bien'));
     }
 
     /**
@@ -36,6 +38,9 @@ class BienPublicoController extends Controller
     public function store(Request $request)
     {
         //
+        $bienpublico = new BienPublico;
+        $bienpublico->create($request->all());
+        return redirect('ObjectState/index');
     }
 
     /**
@@ -44,9 +49,13 @@ class BienPublicoController extends Controller
      * @param  \App\BienPublico  $bienPublico
      * @return \Illuminate\Http\Response
      */
-    public function show(BienPublico $bienPublico)
+    public function show($id)
     {
         //
+        $bienpublico=BienPublico::find($id);
+        //en $objeto tengo aquel que coincide con $id
+        return 'Encontre el objeto, hacer algo luego';
+        //return  view('libro.show',compact('objeto'));
     }
 
     /**
@@ -67,9 +76,12 @@ class BienPublicoController extends Controller
      * @param  \App\BienPublico  $bienPublico
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BienPublico $bienPublico)
+    public function update(Request $request, $id)
     {
         //
+
+        BienPublico::find($id)->update($request->all());
+        return redirect('ObjectState/index');
     }
 
     /**
@@ -78,8 +90,10 @@ class BienPublicoController extends Controller
      * @param  \App\BienPublico  $bienPublico
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BienPublico $bienPublico)
+    public function destroy($id)
     {
         //
+        BienPublico::find($id)->delete();
+        return redirect('ObjectState/index')->with('success','Registro eliminado satisfactoriamente');
     }
 }

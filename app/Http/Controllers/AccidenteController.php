@@ -15,6 +15,8 @@ class AccidenteController extends Controller
     public function index()
     {
         //
+        $accidentes = Accidente::all(); 
+        return view('listado',compact('accidentes'));
     }
 
     /**
@@ -36,6 +38,9 @@ class AccidenteController extends Controller
     public function store(Request $request)
     {
         //
+        $accidente = new Accidente;
+        $accidente->create($request->all());
+        return redirect('Accidente/index');
     }
 
     /**

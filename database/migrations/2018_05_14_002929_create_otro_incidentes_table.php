@@ -16,7 +16,7 @@ class CreateOtroIncidentesTable extends Migration
         Schema::create('otro_incidentes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('entity_id')->unsigned();
-            $table->foreign('entity_id')->references('id')->on('entities');
+            $table->foreign('entity_id')->references('id')->on('entities')->onDelete('cascade');
             $table->string('descripcion');
             $table->timestamps();
         });
