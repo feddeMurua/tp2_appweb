@@ -93,6 +93,7 @@
                         }
                     });
 
+               
                 $("#bache").draggable(
                     {helper: 'clone',
                         stop: function(e,ui) {
@@ -106,7 +107,8 @@
                         setTimeout(function(){
                             $('#myModal').modal('toggle');
                             $('#myModal').modal('show');                        
-                        },850);                        
+                        },850);
+                      
                     }
                 });
             });
@@ -266,13 +268,14 @@
                 <div id="mySidenav" class="sidenav">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                     <a href="#">About</a>
-                    <a href="#">Eventos</a>
-                    <a href="#">Ciudad</a>
+                    <a href="#">Eventos</a>                    
                     <a href="#">Estados de Objetos</a>                            
+                    <a href="#">Ciudad</a>
+                    <a href="#">Listado de Aspectos</a>
                 </div>
             </div>
             <div class="col-sm-8">
-                <h1 align="center"> Mapa de Eventos</h1><br>                                                
+                <h1 align="center"> Mapa de Aspectos</h1><br>                                                
                 <div id="map_canvas"></div>
             </div>
             <div class="col-sm-2">
@@ -308,13 +311,14 @@
                     <div class="modal-content">
                         <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Modal Header</h4>
+                        <h4 class="modal-title">Nuevo Aspecto</h4>
                         </div>
                         <div class="modal-body">
                         <p>Some text in the modal.</p>
                         </div>
                         <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Confirmar</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                         </div>
                     </div>                
                 </div>
