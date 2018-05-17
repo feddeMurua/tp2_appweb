@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('inicio');
 });
 
+Route::resource('entities','EntityController');
+
 Route::get('/ObjectState/index', 'ObjectStateController@index');
 Route::get('/ObjectState/crear', 'ObjectStateController@create');
 Route::get('/ObjectState/guardar', 'ObjectStateController@store');

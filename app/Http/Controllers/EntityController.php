@@ -24,7 +24,7 @@ class EntityController extends Controller
      */
     public function create()
     {
-        //
+        return view('entities.create');
     }
 
     /**
@@ -35,7 +35,16 @@ class EntityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $entity = $this->validate(request(), [
+            'nombre' => 'required',            
+            'ubicacion' => 'required',
+            //'fecha_y_hora' => 'required|date|date_format:Y-m-d H:i:s'            
+          ]);
+          
+          $request['fecha_y_hora']=date("Y-m-d h:i:s", time());
+          Entity::create($entity);
+  
+          return back()->with('success', 'Entity has been added');
     }
 
     /**
