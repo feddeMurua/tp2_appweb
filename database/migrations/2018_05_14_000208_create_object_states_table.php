@@ -16,7 +16,7 @@ class CreateObjectStatesTable extends Migration
         Schema::create('object_states', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->dateTime('fecha_y_hora');
+            $table->dateTime('fecha_y_hora')->default(\Carbon\Carbon::now());;
             $table->string('ubicacion');
             $table->timestamps();
         });

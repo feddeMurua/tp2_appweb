@@ -56,6 +56,23 @@
                                     </div>");                    
                 }                              
                 
+               
+                function cargar_opciones_baches(){
+                    $('#aspectos').attr('action', '{{url('baches')}}');
+                    $("#opciones").html("<div class='form-group col-md-8'>\
+                                        <label class='radio-inline'><input type='radio' name='estado' value='calle en mal estado'>Calle Mal Estado</label>\
+                                        <label class='radio-inline'><input type='radio' name='estado' value='calle bloqueada'>Calle Bloqueada</label>\
+                                    </div>");                    
+                }
+                
+                function cargar_opciones_agua(){
+                    $('#aspectos').attr('action', '{{url('agua')}}');
+                    $("#opciones").html("<div class='form-group col-md-8'>\
+                                        <label class='radio-inline'><input type='radio' name='estado' value='pérdida'>Pérdida</label>\
+                                        <label class='radio-inline'><input type='radio' name='estado' value='sin suministro'>Sin Suministro</label>\
+                                    </div>");                    
+                }
+                
                 function cargar_datos(ll, nombre){
                     $("#ubicacion").val(ll);
                     $("#nombre").val(nombre);
@@ -116,9 +133,9 @@
                         },850);
                         cargar_datos(ll, "Incendio");                       
                         }
-                    });
+                    });             
 
-                $("#semaforos").draggable(
+                $("#servicio_agua").draggable(
                     {helper: 'clone',
                         stop: function(e,ui) {
                         var mOffset=$($map.getDiv()).offset();
@@ -127,23 +144,15 @@
                             ui.offset.top-mOffset.top+(ui.helper.height())
                         );
                         var ll=overlay.getProjection().fromContainerPixelToLatLng(point);
-                        placeMarker_semaforos(ll);                        
+                        placeMarker_perdida_agua(ll);   
+                        setTimeout(function(){ 
+                            cargar_opciones_agua();                        
+                            $('#myModal').modal('toggle');
+                            $('#myModal').modal('show');                                                    
+                        },850);
+                        cargar_datos(ll, "Servicio Agua");             
                         }
                     });
-
-                $("#perdida_agua").draggable(
-                    {helper: 'clone',
-                        stop: function(e,ui) {
-                        var mOffset=$($map.getDiv()).offset();
-                        var point=new google.maps.Point(
-                            ui.offset.left-mOffset.left+(ui.helper.width()/2),
-                            ui.offset.top-mOffset.top+(ui.helper.height())
-                        );
-                        var ll=overlay.getProjection().fromContainerPixelToLatLng(point);
-                        placeMarker_perdida_agua(ll);                        
-                        }
-                    });
-
                
                 $("#bache").draggable(
                     {helper: 'clone',
@@ -154,7 +163,13 @@
                             ui.offset.top-mOffset.top+(ui.helper.height())
                         );
                         var ll=overlay.getProjection().fromContainerPixelToLatLng(point)                        
-                        placeMarker_bache(ll);                           
+                        placeMarker_bache(ll);  
+                        setTimeout(function(){ 
+                            cargar_opciones_baches();                        
+                            $('#myModal').modal('toggle');
+                            $('#myModal').modal('show');                                                    
+                        },850);
+                        cargar_datos(ll, "Bache");                             
                     }
                 });
             });
@@ -228,8 +243,10 @@
                     draggable:true,
                     animation: google.maps.Animation.DROP,
                 });    
-
-                  /*
+                
+                google.maps.event.addListener(marker,  'rightclick',  function(mouseEvent) { marker.setMap(null); });                          
+                
+                /*
                 //si es necesario evento cuando se mueve el marcador                                
                 google.maps.event.addListener(marker, "dragend", function(event) { 
                 var lat = event.latLng.lat(); 
@@ -259,9 +276,10 @@
                     },
                     draggable:true,
                     animation: google.maps.Animation.DROP,
-                });             
+                });   
+                google.maps.event.addListener(marker,  'rightclick',  function(mouseEvent) { marker.setMap(null); });                                    
             }
-
+            /*
             function placeMarker_semaforos(location) {
                 var marker = new google.maps.Marker({
                     position: location, 
@@ -274,7 +292,7 @@
                     animation: google.maps.Animation.DROP,
                 });             
             }
-            
+            */
             function placeMarker_perdida_agua(location) {
                 var marker = new google.maps.Marker({
                     position: location, 
@@ -286,6 +304,7 @@
                     draggable:true,
                     animation: google.maps.Animation.DROP,
                 });    
+                google.maps.event.addListener(marker,  'rightclick',  function(mouseEvent) { marker.setMap(null); });
             }
             
             function placeMarker_bache(location) {
@@ -338,17 +357,14 @@
                 </div>
                 <hr>
                 <h1 align="center">Objetos</h1><br>
-                <div align="center">                            
+                <div align="center">
+                    <!--                            
                     <img data-toggle="tooltip" title="Semáforos" id="semaforos" class="draggable" src='images/semaforo.jpg'/>
                     <br><br>
-                    <img data-toggle="tooltip" title="Pérdida de Agua" id="perdida_agua" class="draggable" src='images/perdida_agua.jpg'/>
+                    -->
+                    <img data-toggle="tooltip" title="Servicio de Agua" id="servicio_agua" class="draggable" src='images/perdida_agua.jpg'/>
                     <br><br>
-                    <img data-toggle="tooltip" title="Baches" id="bache" class="draggable" src='images/bache.jpg'/>
-                    <br><br>
-                     -baches <br>
-                      + calle mal Estado <br>
-                      + calle bloqueada <br>
-
+                    <img data-toggle="tooltip" title="Baches" id="bache" class="draggable" src='images/bache.jpg'/>                  
                 </div>                                        
             </div>
         </div>

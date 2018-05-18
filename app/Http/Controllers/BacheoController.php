@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bacheo;
+use App\ObjectState;
 use Illuminate\Http\Request;
 
 class BacheoController extends Controller
@@ -39,10 +40,13 @@ class BacheoController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $bacheo = new Bacheo;
-        $bacheo->create($request->all());
-        return redirect('ObjectState/index')
+        $bache = new Bacheo;
+        $objeto = new ObjectState;      
+
+        $objeto->create(['nombre'=>$request->input('nombre'), 'ubicacion'=>$request->input('ubicacion')]);                       
+        $bache->create(['object_state_id' =>ObjectState::orderBy('created_at', 'desc')->first()->id, 'estado'=>$request->input('estado')]);
+
+        return back()->with('success', 'Accidente has been added');
     }
 
     /**

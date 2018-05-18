@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AguaCloaca;
+use App\ObjectState;
 use Illuminate\Http\Request;
 
 class AguaCloacaController extends Controller
@@ -37,10 +38,13 @@ class AguaCloacaController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $aguacloaca = new AguaCloaca;
-        $aguacloaca->create($request->all());
-        return redirect('ObjectState/index');
+        $agua = new AguaCloaca;
+        $objeto = new ObjectState;      
+
+        $objeto->create(['nombre'=>$request->input('nombre'), 'ubicacion'=>$request->input('ubicacion')]);                       
+        $agua->create(['object_state_id' =>ObjectState::orderBy('created_at', 'desc')->first()->id, 'estado'=>$request->input('estado')]);
+
+        return back()->with('success', 'Accidente has been added');
     }
 
     /**

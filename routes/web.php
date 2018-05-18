@@ -19,4 +19,6 @@ Route::resource('entities','EntityController');
 Route::resource('accidentes','AccidenteController');
 Route::resource('robos','RoboController');
 Route::resource('incendios','IncendioController');
+Route::resource('baches','BacheoController');
+Route::resource('agua','AguaCloacaController');
 
