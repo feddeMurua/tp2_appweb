@@ -14,7 +14,9 @@ class EntityController extends Controller
      */
     public function index()
     {
-        //
+        $entidades = Entity::all(); 
+        return $entidades;
+
     }
 
     /**

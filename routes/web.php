@@ -21,4 +21,10 @@ Route::resource('robos','RoboController');
 Route::resource('incendios','IncendioController');
 Route::resource('baches','BacheoController');
 Route::resource('agua','AguaCloacaController');
+Route::get('/aspectos', 'FiltrosController@listarAspectos');
+
+Route::get('/filtrarFechas/{fecha1}/{fecha2?}', 'FiltrosController@filtrarFechaRango');
+Route::get('/filtrarNombres/{nombre}', 'FiltrosController@filtrarTipoAspecto');
+Route::get('/eventos', 'FiltrosController@filtrarEventos');
+Route::get('/objetos', 'FiltrosController@filtrarEstadoObjetos');
 

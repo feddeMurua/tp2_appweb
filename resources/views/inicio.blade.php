@@ -335,10 +335,12 @@
                 <div id="mySidenav" class="sidenav">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                     <a href="#">About</a>
-                    <a href="#">Eventos</a>                    
-                    <a href="#">Estados de Objetos</a>                            
-                    <a href="#">Ciudad</a>
-                    <a href="#">Listado de Aspectos</a>
+                    <a href="/eventos">Filtrado por Eventos</a> 
+                    <a href="/objetos">Filtrado por Estados de Objetos</a> 
+                    <a href="#">Filtrado por Fecha</a>
+                    <a href="#" onclick="click_menu()">Filtrado por Tipo de Aspecto</a>
+                    <div id = "nombreAspecto" class="row">
+                    </div>    
                 </div>
             </div>
             <div class="col-sm-8">
