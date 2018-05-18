@@ -16,11 +16,5 @@ Route::get('/', function () {
 });
 
 Route::resource('entities','EntityController');
+Route::resource('accidentes','AccidenteController');
 
-Route::get('/ObjectState/index', 'ObjectStateController@index');
-Route::get('/ObjectState/crear', 'ObjectStateController@create');
-Route::get('/ObjectState/guardar', 'ObjectStateController@store');
-Route::get('/ObjectState/mostrar', 'ObjectStateController@show');
-Route::get('/ObjectState/editar', 'ObjectStateController@edit');
-Route::get('/ObjectState/actualizar', 'ObjectStateController@update');
-Route::get('/ObjectState/borrar', 'ObjectStateController@destroy');

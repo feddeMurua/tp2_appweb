@@ -28,6 +28,11 @@
           
           $(document).ready(function() {
                 
+                function cargar_datos(ll, nombre){
+                    $("#ubicacion").val(ll);
+                    $("#nombre").val(nombre);
+                }
+
                 $("#accidente").draggable(
                     {helper: 'clone',
                         stop: function(e,ui) {
@@ -37,7 +42,12 @@
                             ui.offset.top-mOffset.top+(ui.helper.height())
                         );
                         var ll=overlay.getProjection().fromContainerPixelToLatLng(point);
-                        placeMarker_accidente(ll);                        
+                        placeMarker_accidente(ll);        
+                        setTimeout(function(){
+                            $('#myModal').modal('toggle');
+                            $('#myModal').modal('show');                        
+                        },850);
+                        cargar_datos(ll, "Accidente");                
                         }
                     });
 
@@ -103,12 +113,7 @@
                             ui.offset.top-mOffset.top+(ui.helper.height())
                         );
                         var ll=overlay.getProjection().fromContainerPixelToLatLng(point)                        
-                        placeMarker_bache(ll);   
-                        setTimeout(function(){
-                            $('#myModal').modal('toggle');
-                            $('#myModal').modal('show');                        
-                        },850);
-                      
+                        placeMarker_bache(ll);                           
                     }
                 });
             });
@@ -166,8 +171,24 @@
                     },
                     draggable:true,
                     animation: google.maps.Animation.DROP,
-                });             
-                /*
+                });   
+                
+                google.maps.event.addListener(marker,  'rightclick',  function(mouseEvent) { marker.setMap(null); });                          
+            }
+
+            function placeMarker_robo(location) {
+                var marker = new google.maps.Marker({
+                    position: location, 
+                    map: $map,
+                    icon:{
+                        url: "images/senial_robo.jpg",
+                        scaledSize: new google.maps.Size(34, 34)
+                    },
+                    draggable:true,
+                    animation: google.maps.Animation.DROP,
+                });    
+
+                  /*
                 //si es necesario evento cuando se mueve el marcador                                
                 google.maps.event.addListener(marker, "dragend", function(event) { 
                 var lat = event.latLng.lat(); 
@@ -184,20 +205,7 @@
                 console.log(lat);
                 }); 
                 */
-            
-            }
 
-            function placeMarker_robo(location) {
-                var marker = new google.maps.Marker({
-                    position: location, 
-                    map: $map,
-                    icon:{
-                        url: "images/senial_robo.jpg",
-                        scaledSize: new google.maps.Size(34, 34)
-                    },
-                    draggable:true,
-                    animation: google.maps.Animation.DROP,
-                });             
             }
 
             function placeMarker_animales(location) {
@@ -251,14 +259,13 @@
                     animation: google.maps.Animation.DROP,
                     
                 }); 
-                
+                google.maps.event.addListener(marker,  'rightclick',  function(mouseEvent) { marker.setMap(null); });
             }
 
         </script>
     </head>
 
-    <body onload="initialize()">
-                
+    <body onload="initialize()">                
         <div class="row">                                    
             <div class="col-sm-2">
                 <br>
@@ -282,10 +289,22 @@
                 <h1 align="center">Eventos</h1><br>
                 <div align="center">                            
                     <img data-toggle="tooltip" title="Accidentes de Tránsito" id="accidente" class="draggable" src='images/senial_accidente.jpg'/>
+                    <br><br> -Accidentes <br>
+                    + lesionados <br>
+                    + sin leccionados <br>
+                    + graves <br>
                     <br><br>
                     <img data-toggle="tooltip" title="Robos" id="robo" class="draggable" src='images/senial_robo.jpg'/>
+                    <br><br>-robos <br>
+                    + hurto <br>
+                    + asalto <br>
+                    + asalto con heridos<br>
                     <br><br>                            
                     <img data-toggle="tooltip" title="Animales Sueltos" id="animales" class="draggable" src='images/senial_animales.jpg'/>
+                    <br><br> -incendios <br>
+                    + auto <br>
+                    + vivienda/edificio publico <br>
+                    + campo                     
                     <br><br>  
                 </div>
                 <hr>
@@ -296,6 +315,11 @@
                     <img data-toggle="tooltip" title="Pérdida de Agua" id="perdida_agua" class="draggable" src='images/perdida_agua.jpg'/>
                     <br><br>
                     <img data-toggle="tooltip" title="Baches" id="bache" class="draggable" src='images/bache.jpg'/>
+                    <br><br>
+                     -baches <br>
+                      + calle mal Estado <br>
+                      + calle bloqueada <br>
+
                 </div>                                        
             </div>
         </div>
@@ -310,20 +334,52 @@
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Nuevo Aspecto</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Nuevo Aspecto</h4>
                         </div>
-                        <div class="modal-body">
-                        <p>Some text in the modal.</p>
+                        <div class="modal-body">                                                                                                                    
+                            <form id="accidentes" method="post" action="{{url('accidentes')}}">        
+                                {{csrf_field()}}
+                                <div class="row">
+                                    <div class="col-md-4"></div>
+                                    <div style="display:none" class="form-group col-md-4">
+                                        <!--form evento, campo nombre-->                                        
+                                        <input type="text" class="form-control" id="nombre" name="nombre">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4"></div>
+                                    <div style="display:none" class="form-group col-md-4">
+                                        <!--form evento, campo ubicacion-->                                        
+                                        <input type="text" class="form-control" id="ubicacion" name="ubicacion">
+                                    </div>
+                                </div>
+                                <div class="row">                                    
+                                    <div class="form-group col-md-8">
+                                        <label class="radio-inline"><input type="radio" name="gravedad" value="Sin Lesionados">Sin Lesionados</label>
+                                        <label class="radio-inline"><input type="radio" name="gravedad" value="Lesionados">Lesionados</label>                                                                               
+                                        <label class="radio-inline"><input type="radio" name="gravedad" value="Graves">Graves</label>
+                                    </div>                                
+                                </div>
+                            </form>
                         </div>
                         <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-dismiss="modal">Confirmar</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="form-group col-md-4">
+                                    <button type="button" class="btn btn-success" data-dismiss="modal" onclick="submitForms()">Confirmar</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                            <script>
+                                submitForms = function(){                                    
+                                    document.getElementById("accidentes").submit();
+                                }
+                            </script>
                         </div>
-                    </div>                
-                </div>
+                    </div>                        
+                </div>                
             </div>
-        </div>                    
+        </div>                        
     </body>
-
 </html>

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Accidente;
+use App\Entity;
 use Illuminate\Http\Request;
+//use Illuminate\Support\Facades\Input;
 
 class AccidenteController extends Controller
 {
@@ -37,10 +39,14 @@ class AccidenteController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $accidente = new Accidente;
-        $accidente->create($request->all());
-        return redirect('Accidente/index');
+        $evento = new Entity;      
+
+        $evento->create(['nombre'=>$request->input('nombre'), 'ubicacion'=>$request->input('ubicacion')]);                       
+        $accidente->create(['entity_id' =>Entity::orderBy('created_at', 'desc')->first()->id, 'gravedad'=>$request->input('gravedad')]);
+
+        return back()->with('success', 'Accidente has been added');
+        
     }
 
     /**
