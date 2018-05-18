@@ -16,8 +16,8 @@ class CreateIncendiosTable extends Migration
         Schema::create('incendios', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('entity_id')->unsigned();
-            $table->foreign('entity_id')->references('id')->on('entities')->onDelete('cascade');
-            $table->enum('objeto_afectado', ['incendio de auto','incendio de vivienda/edificio publico','incendio de campo']);
+            $table->foreign('entity_id')->references('id')->on('entities')->onDelete('cascade');            
+            $table->string('objeto_afectado');
             $table->timestamps();
         });
     }

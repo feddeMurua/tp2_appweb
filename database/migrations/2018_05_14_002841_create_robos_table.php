@@ -16,8 +16,8 @@ class CreateRobosTable extends Migration
         Schema::create('robos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('entity_id')->unsigned();
-            $table->foreign('entity_id')->references('id')->on('entities')->onDelete('cascade');
-            $table->enum('tipo', ['hurto','asalto','asalto con heridos']);
+            $table->foreign('entity_id')->references('id')->on('entities')->onDelete('cascade');            
+            $table->string('tipo');
             $table->timestamps();
         });
     }

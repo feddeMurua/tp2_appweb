@@ -28,6 +28,34 @@
           
           $(document).ready(function() {
                 
+                
+                function cargar_opciones_accidentes(){
+                    $('#aspectos').attr('action', '{{url('accidentes')}}');
+                    $("#opciones").html("<div class='form-group col-md-8'>\
+                                            <label class='radio-inline'><input type='radio' name='gravedad' value='Sin Lesionados'>Sin Lesionados</label>\
+                                            <label class='radio-inline'><input type='radio' name='gravedad' value='Lesionados'>Lesionados</label>\
+                                            <label class='radio-inline'><input type='radio' name='gravedad' value='Graves'>Graves</label>\
+                                        </div>");                    
+                }
+                
+                function cargar_opciones_robos(){
+                    $('#aspectos').attr('action', '{{url('robos')}}');
+                    $("#opciones").html("<div class='form-group col-md-8'>\
+                                        <label class='radio-inline'><input type='radio' name='tipo' value='Hurto'>Hurto</label>\
+                                        <label class='radio-inline'><input type='radio' name='tipo' value='Asalto'>Asalto</label>\
+                                        <label class='radio-inline'><input type='radio' name='tipo' value='Asalto con Heridos'>Asalto con Heridos</label>\
+                                    </div>");                    
+                }
+
+                function cargar_opciones_incendios(){
+                    $('#aspectos').attr('action', '{{url('incendios')}}');
+                    $("#opciones").html("<div class='form-group col-md-8'>\
+                                        <label class='radio-inline'><input type='radio' name='objeto_afectado' value='Incendio de auto'>Auto</label>\
+                                        <label class='radio-inline'><input type='radio' name='objeto_afectado' value='Incendio de vivienda/edificio público'>Vivienda/Edificio Público</label>\
+                                        <label class='radio-inline'><input type='radio' name='objeto_afectado' value='Incendio de campo'>Campo</label>\
+                                    </div>");                    
+                }                              
+                
                 function cargar_datos(ll, nombre){
                     $("#ubicacion").val(ll);
                     $("#nombre").val(nombre);
@@ -43,9 +71,10 @@
                         );
                         var ll=overlay.getProjection().fromContainerPixelToLatLng(point);
                         placeMarker_accidente(ll);        
-                        setTimeout(function(){
+                        setTimeout(function(){ 
+                            cargar_opciones_accidentes();                        
                             $('#myModal').modal('toggle');
-                            $('#myModal').modal('show');                        
+                            $('#myModal').modal('show');                                                    
                         },850);
                         cargar_datos(ll, "Accidente");                
                         }
@@ -60,11 +89,17 @@
                             ui.offset.top-mOffset.top+(ui.helper.height())
                         );
                         var ll=overlay.getProjection().fromContainerPixelToLatLng(point);
-                        placeMarker_robo(ll);                        
+                        placeMarker_robo(ll);
+                        setTimeout(function(){ 
+                            cargar_opciones_robos();                        
+                            $('#myModal').modal('toggle');
+                            $('#myModal').modal('show');                                                    
+                        },850);
+                        cargar_datos(ll, "Robo");                        
                         }
                     });
 
-                $("#animales").draggable(
+                $("#incendio").draggable(
                     {helper: 'clone',
                         stop: function(e,ui) {
                         var mOffset=$($map.getDiv()).offset();
@@ -73,7 +108,13 @@
                             ui.offset.top-mOffset.top+(ui.helper.height())
                         );
                         var ll=overlay.getProjection().fromContainerPixelToLatLng(point);
-                        placeMarker_animales(ll);                        
+                        placeMarker_incendio(ll);
+                        setTimeout(function(){ 
+                            cargar_opciones_incendios();                        
+                            $('#myModal').modal('toggle');
+                            $('#myModal').modal('show');                                                    
+                        },850);
+                        cargar_datos(ll, "Incendio");                       
                         }
                     });
 
@@ -208,12 +249,12 @@
 
             }
 
-            function placeMarker_animales(location) {
+            function placeMarker_incendio(location) {
                 var marker = new google.maps.Marker({
                     position: location, 
                     map: $map,
                     icon:{
-                        url: "images/senial_animales.jpg",
+                        url: "images/incendio.jpg",
                         scaledSize: new google.maps.Size(34, 34)
                     },
                     draggable:true,
@@ -288,23 +329,11 @@
             <div class="col-sm-2">
                 <h1 align="center">Eventos</h1><br>
                 <div align="center">                            
-                    <img data-toggle="tooltip" title="Accidentes de Tránsito" id="accidente" class="draggable" src='images/senial_accidente.jpg'/>
-                    <br><br> -Accidentes <br>
-                    + lesionados <br>
-                    + sin leccionados <br>
-                    + graves <br>
+                    <img data-toggle="tooltip" title="Accidentes de Tránsito" id="accidente" class="draggable" src='images/senial_accidente.jpg'/>                    
                     <br><br>
-                    <img data-toggle="tooltip" title="Robos" id="robo" class="draggable" src='images/senial_robo.jpg'/>
-                    <br><br>-robos <br>
-                    + hurto <br>
-                    + asalto <br>
-                    + asalto con heridos<br>
-                    <br><br>                            
-                    <img data-toggle="tooltip" title="Animales Sueltos" id="animales" class="draggable" src='images/senial_animales.jpg'/>
-                    <br><br> -incendios <br>
-                    + auto <br>
-                    + vivienda/edificio publico <br>
-                    + campo                     
+                    <img data-toggle="tooltip" title="Robos" id="robo" class="draggable" src='images/senial_robo.jpg'/>                    
+                    <br><br>
+                    <img data-toggle="tooltip" title="Incendios" id="incendio" class="draggable" src='images/incendio.jpg'/>                                        
                     <br><br>  
                 </div>
                 <hr>
@@ -338,7 +367,7 @@
                             <h4 class="modal-title">Nuevo Aspecto</h4>
                         </div>
                         <div class="modal-body">                                                                                                                    
-                            <form id="accidentes" method="post" action="{{url('accidentes')}}">        
+                            <form id="aspectos" method="post">        
                                 {{csrf_field()}}
                                 <div class="row">
                                     <div class="col-md-4"></div>
@@ -354,12 +383,8 @@
                                         <input type="text" class="form-control" id="ubicacion" name="ubicacion">
                                     </div>
                                 </div>
-                                <div class="row">                                    
-                                    <div class="form-group col-md-8">
-                                        <label class="radio-inline"><input type="radio" name="gravedad" value="Sin Lesionados">Sin Lesionados</label>
-                                        <label class="radio-inline"><input type="radio" name="gravedad" value="Lesionados">Lesionados</label>                                                                               
-                                        <label class="radio-inline"><input type="radio" name="gravedad" value="Graves">Graves</label>
-                                    </div>                                
+                                <div class="row" id="opciones">                                    
+                                    <!--div donde se cargan las opciones de cada evento-->                              
                                 </div>
                             </form>
                         </div>
@@ -373,7 +398,10 @@
                             </div>
                             <script>
                                 submitForms = function(){                                    
-                                    document.getElementById("accidentes").submit();
+                                    document.getElementById("aspectos").submit();
+                                    $('#myModal').on('hidden.bs.modal', function () {
+                                    alert("Aspecto registrado correctamente...")
+                                    })
                                 }
                             </script>
                         </div>

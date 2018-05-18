@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Robo;
+use App\Entity;
 use Illuminate\Http\Request;
 
 class RoboController extends Controller
@@ -35,7 +36,13 @@ class RoboController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $robo = new Robo;
+        $evento = new Entity;      
+
+        $evento->create(['nombre'=>$request->input('nombre'), 'ubicacion'=>$request->input('ubicacion')]);                       
+        $robo->create(['entity_id' =>Entity::orderBy('created_at', 'desc')->first()->id, 'tipo'=>$request->input('tipo')]);
+
+        return back()->with('success', 'Accidente has been added');
     }
 
     /**

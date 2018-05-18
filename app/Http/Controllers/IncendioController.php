@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Incendio;
+use App\Entity;
 use Illuminate\Http\Request;
 
 class IncendioController extends Controller
@@ -35,7 +36,13 @@ class IncendioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $incendio = new Incendio;
+        $evento = new Entity;      
+
+        $evento->create(['nombre'=>$request->input('nombre'), 'ubicacion'=>$request->input('ubicacion')]);                       
+        $incendio->create(['entity_id' =>Entity::orderBy('created_at', 'desc')->first()->id, 'objeto_afectado'=>$request->input('objeto_afectado')]);
+
+        return back()->with('success', 'Accidente has been added');
     }
 
     /**

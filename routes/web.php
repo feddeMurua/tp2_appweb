@@ -17,4 +17,6 @@ Route::get('/', function () {
 
 Route::resource('entities','EntityController');
 Route::resource('accidentes','AccidenteController');
+Route::resource('robos','RoboController');
+Route::resource('incendios','IncendioController');
 
