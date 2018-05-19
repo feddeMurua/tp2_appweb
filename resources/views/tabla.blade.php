@@ -23,9 +23,6 @@
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="/">Home</a>
-        <a href="/eventos">Eventos</a> 
-        <a href="#">Ciudad</a>
-        <a href="/objetos">Estados de Objetos</a> 
     </div>
 
      <div id="wrapper">
@@ -40,7 +37,6 @@
                     <th><span>id</span></th> 
                     <th><span>Nombre</span></th> 
                     <th><span>Fecha y Hora</span></th> 
-                    <th><span>Ubicacion</span></th>
             </tr>
         </thead>
         <tbody>
@@ -50,7 +46,6 @@
                     <td class="lalign">{{ $object->id }}</td>
                     <td class="lalign">{{ $object->nombre }}</td>
                     <td class="lalign">{{ $object->fecha_y_hora }}</td>
-                    <td class="lalign">{{ $object->ubicacion }}</td>
                 </tr>
               @endforeach
               <?php if (is_null($objeto2)){die;} ?>
@@ -59,7 +54,6 @@
                     <td class="lalign">{{ $entity->id }}</td>
                     <td class="lalign">{{ $entity->nombre }}</td>
                     <td class="lalign">{{ $entity->fecha_y_hora }}</td>
-                    <td class="lalign">{{ $entity->ubicacion }}</td>
                   </tr>
                 @endforeach  
                 

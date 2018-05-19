@@ -25,11 +25,16 @@ class FiltrosController extends Controller
         return view('tabla',compact('objeto1','objeto2'));
     }
 
+ 
 
-    public function filtrarFechaRango($fecha1,$fecha2="")
+
+    public function filtrarFechaRango(Request $data)
     {
         //filtra por la fecha pasada por parametro
-    	if ($fecha2!="") {
+        $fecha1=$data->input('fecha1');
+        $fecha2=$data->input('fecha2');
+
+    	if ($fecha1!="") {
   			$objeto1 = ObjectState::where('created_at', '>=', $fecha1)
         			->where('created_at', '<=', $fecha2)
                  	->orderBy('created_at')
@@ -39,25 +44,26 @@ class FiltrosController extends Controller
                  	->orderBy('created_at')
                  	->get();
 		}else
-			$objeto1 = ObjectState::where('fecha_y_hora', '<=', $fecha1)
-                 	->orderBy('fecha_y_hora')
+			$objeto1 = ObjectState::where('created_at', '<=', $fecha2)
+                 	->orderBy('created_at')
                  	->get();
-            $objeto2 = Entity::where('fecha_y_hora', '<=', $fecha1)
-                 	->orderBy('fecha_y_hora')
+            $objeto2 = Entity::where('created_at', '<=', $fecha2)
+                 	->orderBy('created_at')
                  	->get();
 
         return view('tabla',compact('objeto1','objeto2'));
     }
 
-    public function filtrarTipoAspecto($nombre)
+    public function filtrarTipoAspecto(Request $data)
     {
         //filtra los nombres de los aspectos que comienzen con la cadena ingresada
+        $nombre=$data->input('aspectName');
         $objeto1 = ObjectState::where('nombre', 'like', $nombre.'%')
-                 ->orderBy('fecha_y_hora')
+                 ->orderBy('created_at')
                  ->get();
 
         $objeto2 = Entity::where('nombre', 'like', $nombre.'%')
-                 ->orderBy('fecha_y_hora')
+                 ->orderBy('created_at')
                  ->get();
 
         return view('tabla',compact('objeto1','objeto2'));

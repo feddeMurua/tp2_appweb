@@ -28,7 +28,21 @@
           
           $(document).ready(function() {
                 
-                
+                //---------------------------
+                    $('#filtroFechaX').hide(); 
+                    $('#nombreAspectoX').hide(); 
+                    $("#linkNombre").on( "click", function() {
+                        $('#nombreAspectoX').show(); 
+                    });
+                    $("#linkFecha").on( "click", function() {
+                        $('#filtroFechaX').show(); 
+                    });
+                    //$("#linkNombre").on( "click", function() {
+                    //    $('#nombreAspectoX').hide(); //oculto mediante id
+                    //});
+
+
+                //-----------------------                
                 function cargar_opciones_accidentes(){
                     $('#aspectos').attr('action', '{{url('accidentes')}}');
                     $("#opciones").html("<div class='form-group col-md-8'>\
@@ -337,9 +351,22 @@
                     <a href="#">About</a>
                     <a href="/eventos">Filtrado por Eventos</a> 
                     <a href="/objetos">Filtrado por Estados de Objetos</a> 
-                    <a href="#">Filtrado por Fecha</a>
-                    <a href="#" onclick="click_menu()">Filtrado por Tipo de Aspecto</a>
-                    <div id = "nombreAspecto" class="row">
+                    <a id="linkFecha" ">Filtrado por Fecha</a>
+                    <div id = "filtroFechaX">
+                        <form action="/fecha" method="POST">
+                            {{ csrf_field() }}
+                            <input type="text" name="fecha1" id="fecha1" placeholder="Desde">
+                            <input type="text" name="fecha2" id="fecha1" placeholder="Hasta">
+                            <button type="submit">Enviar</button>
+                        </form>
+                    </div>
+                    <a id="linkNombre">Filtrado por Tipo de Aspecto</a>
+                    <div id = "nombreAspectoX">
+                        <form action="/filtro" method="POST">
+                            {{ csrf_field() }}
+                            <input type="text" name="aspectName" id="aspectName">
+                            <button type="submit">Enviar</button>
+                        </form>
                     </div>    
                 </div>
             </div>
